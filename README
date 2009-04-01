@@ -1,13 +1,39 @@
 RelevanceSearch
 ===============
 
-Introduction goes here.
+Relevance search was designed to return a set of ActiveRecord objects based on the number of attributes
+on the object that include the search term.
+
+TODO: Specify attributes included on the search
+TODO: Multiple search terms
+TODO: Relevance instance method
+TODO: Custom secondary search column
 
 
 Example
 =======
 
-Example goes here.
+Assume you have four records that look like this.
+
+| id | name | address | city | state |
++----+------+---------+------+-------+
+| 1  | term | address | term | term  |
+| 2  | term | term    | term | term  |
+| 3  | term | address | city | term  |
+| 4  | term | address | term | term  |
+
+When you call ObjectClass.relevance_search, you will get the following result set.
 
 
-Copyright (c) 2009 [name of plugin creator], released under the MIT license
+| id | name | address | city | state |
++----+------+---------+------+-------+
+| 2  | term | term    | term | term  |
+| 1  | term | address | term | term  |
+| 4  | term | address | term | term  |
+| 3  | term | address | city | term  |
+
+This is because 2 has a relevance of 4. 1 & 4 have a relevance of 3. 1 is listed first because of a
+secondary search on id
+
+
+Copyright (c) 2009 Charles Max Wood, released under the MIT license
